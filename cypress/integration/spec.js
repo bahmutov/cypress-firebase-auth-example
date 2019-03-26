@@ -2,26 +2,40 @@
 // https://on.cypress.io/intelligent-code-completion
 /// <reference types="Cypress" />
 
-context('Firebase email + password authentication', () => {
+describe('Firebase email + password authentication', () => {
   const username = 'jane@xyz123.com'
   const password = 'password123'
 
-  beforeEach(function resetFirebase () {})
+  context('via UI', () => {
+    // clear saved authentication data before each test
+    // forcing the application to be signed out
+    beforeEach(() => indexedDB.deleteDatabase('firebaseLocalStorageDb'))
 
-  beforeEach(() => {
-    cy.visit('/')
-  })
+    beforeEach(() => {
+      // if wanted, can wait for the identity call to go through
+      // cy.server()
+      // cy.route('POST', 'https://www.googleapis.com/identitytoolkit/**').as(
+      //   'identity'
+      // )
+      // cy.visit('/')
+      // cy.wait('@identity')
 
-  it('can login via UI', function () {
-    cy.contains('#quickstart-sign-in-status', 'Unknown').should('be.visible')
-    cy.contains('#quickstart-sign-in', 'Sign In')
+      cy.visit('/')
+    })
 
-    cy.get('#email').type(username)
-    cy.get('#password').type(password)
+    it('can login via UI', function () {
+      cy.contains('#quickstart-sign-in-status', 'Unknown').should('be.visible')
+      cy.contains('#quickstart-sign-in', 'Sign In')
 
-    cy.get('#quickstart-sign-in').click()
+      cy.get('#email').type(username)
+      cy.get('#password').type(password)
 
-    cy.contains('#quickstart-sign-in-status', 'Signed in').should('be.visible')
-    cy.contains('#quickstart-sign-in', 'Sign out')
+      cy.get('#quickstart-sign-in').click()
+
+      cy.contains('#quickstart-sign-in-status', 'Signed in').should(
+        'be.visible'
+      )
+      cy.contains('#quickstart-sign-in', 'Sign out')
+    })
   })
 })
