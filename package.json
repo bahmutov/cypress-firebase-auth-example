@@ -5,13 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel serve index.html"
+    "start": "parcel serve index.html",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "dev": "start-test 1234 cy:open"
   },
   "keywords": [],
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com> (https://glebbahmutov.com/)",
   "license": "ISC",
   "devDependencies": {
+    "cypress": "3.2.0",
+    "idb": "4.0.0",
     "parcel-bundler": "1.12.3",
-    "prettier": "1.16.4"
+    "prettier": "1.16.4",
+    "start-server-and-test": "1.7.12"
   }
 }
